@@ -4,8 +4,8 @@ window.onload = function() {
 
     // Creating the camera
     var camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
-    camera.position.z = 155;
-    camera.position.y = 30;
+    camera.position.y = 0;
+    camera.position.z = 85;
 
     // WebGL renderer
     var renderer = new THREE.WebGLRenderer();
@@ -14,8 +14,8 @@ window.onload = function() {
     var loader = new THREE.TextureLoader();
 
     // Adding the Sun
-    var geometry = new THREE.SphereGeometry(15, 32, 32);
-    var material = new THREE.MeshBasicMaterial( {map: (new THREE.TextureLoader()).load('textures/sun3.jpg')} );
+    var geometry = new THREE.SphereGeometry(23, 32, 32);
+    var material = new THREE.MeshBasicMaterial( {map: (new THREE.TextureLoader()).load('textures/sun.jpg')} );
     var sun_mesh = new THREE.Mesh(geometry, material);
     sun_mesh.matrixAutoUpdate = false;
     scene.add(sun_mesh);
@@ -25,6 +25,10 @@ window.onload = function() {
     sun_mesh.add(sun_light);
     var ambient_light = new THREE.AmbientLight( 0x404040 ); // soft white light
     scene.add(ambient_light);
+
+    // Adding stars
+    stars = loader.load('textures/stars.jpg');
+    scene.background = stars;
 
     // Adding mercury
     var geometry = new THREE.SphereGeometry(3, 32, 32);
@@ -59,6 +63,14 @@ window.onload = function() {
     earth_moon_mesh.matrixAutoUpdate = false;
     earth_mesh.add(earth_moon_mesh);
 
+    // Adding Mars
+    var geometry = new THREE.SphereGeometry(4, 32, 32);
+    var material = new THREE.MeshLambertMaterial( {map: loader.load('textures/mars.jpg')} );
+    var mars_mesh = new THREE.Mesh(geometry, material);
+    mars_mesh.matrixAutoUpdate = false;
+    scene.add(mars_mesh);
+
+
     function animate() {
         var now = new Date();
         now.setHours(now.getHours() + 0);
@@ -66,6 +78,8 @@ window.onload = function() {
         animate.time = now;
 
         var rot_const = 0.001;
+        var speed = 0.3;
+        
 
         renderer.render(scene, camera);
         requestAnimationFrame(animate);
@@ -75,34 +89,43 @@ window.onload = function() {
         sun_mesh.matrix = sun_rot;
 
         // Mercury
-        var mercury_rot_speed = 0.7;
-        var mercury_self_rot = new THREE.Matrix4().makeRotationY(now * 0.001);
-        var mercury_tras = new THREE.Matrix4().makeTranslation(25,0,0);
-        var mercury_sun_rot = new THREE.Matrix4().makeRotationY(0.003*now);
+        var mercury_self_rot = new THREE.Matrix4().makeRotationY(now * 0.001 * speed);
+        var mercury_tras = new THREE.Matrix4().makeTranslation(30,0,0);
+        var mercury_sun_rot = new THREE.Matrix4().makeRotationY(0.005*now * speed);
         mercury_mesh.matrix = mercury_sun_rot.multiply(mercury_tras.multiply(mercury_self_rot));
 
         // Venus
-        var venus_rot_speed = 0.5;
-        var venus_self_rot = new THREE.Matrix4().makeRotationY(now * 0.002);
+        var venus_self_rot = new THREE.Matrix4().makeRotationY(now * 0.002 * speed);
         var venus_tras = new THREE.Matrix4().makeTranslation(45,0,0);
-        var venus_sun_rot = new THREE.Matrix4().makeRotationY(0.002*now);
+        var venus_sun_rot = new THREE.Matrix4().makeRotationY(0.002*now * speed);
         venus_mesh.matrix = venus_sun_rot.multiply(venus_tras.multiply(venus_self_rot));
         // Venus' moon
         var venus_moon_tras = new THREE.Matrix4().makeTranslation(7,0,0);
-        var venus_moon_earth_rot = new THREE.Matrix4().makeRotationY(0.005*now);
+        var venus_moon_earth_rot = new THREE.Matrix4().makeRotationY(0.003*now);
         venus_moon_mesh.matrix = venus_moon_earth_rot.multiply(venus_moon_tras);
 
         // Earth
-        var earth_rot_speed = 1;
-        var earth_self_rot = new THREE.Matrix4().makeRotationY(now*rot_const * earth_rot_speed);
-        var earth_tras = new THREE.Matrix4().makeTranslation(65,0,0);
-        var earth_sun_rot = new THREE.Matrix4().makeRotationY(0.0015*now);
+        var earth_self_rot = new THREE.Matrix4().makeRotationY(now*0.001 * speed);
+        var earth_tras = new THREE.Matrix4().makeTranslation(60,0,0);
+        var earth_sun_rot = new THREE.Matrix4().makeRotationY(0.0015*now * speed);
         earth_mesh.matrix = earth_sun_rot.multiply(earth_tras.multiply(earth_self_rot));
         // Moon
         var earth_moon_tras = new THREE.Matrix4().makeTranslation(7,0,0);
         var earth_moon_earth_rot = new THREE.Matrix4().makeRotationY(0.001*now);
         earth_moon_mesh.matrix = earth_moon_earth_rot.multiply(earth_moon_tras);
+
+        // Mars
+        var mars_self_rot = new THREE.Matrix4().makeRotationY(now*0.001 * speed);
+        var mars_tras = new THREE.Matrix4().makeTranslation(75,0,0);
+        var mars_sun_rot = new THREE.Matrix4().makeRotationY(0.0005*now * speed);
+        mars_mesh.matrix = mars_sun_rot.multiply(mars_tras.multiply(mars_self_rot));
+
     }
+
+    document.getElementById("cameraY").oninput = function(e) { camera.position.y = e.target.value; };
+    document.getElementById("cameraZ").oninput = function(e) { camera.position.z = e.target.value; };
+
+
 
     animate();
 }
