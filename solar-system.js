@@ -14,14 +14,14 @@ window.onload = function() {
 
     // Adding the Sun
     var geometry = new THREE.SphereGeometry(3, 32, 32);
-    var material = new THREE.MeshLambertMaterial( {map:THREE.ImageUtils.loadTexture('sun.jpg')} );
+    var material = new THREE.MeshLambertMaterial( {map:THREE.ImageUtils.loadTexture('textures/sun.jpg')} );
     var sun_mesh = new THREE.Mesh(geometry, material);
     sun_mesh.matrixAutoUpdate = false;
     scene.add(sun_mesh);
 
     // Adding earth
     var geometry = new THREE.SphereGeometry(2, 32, 32);
-    var material = new THREE.MeshLambertMaterial( {map:THREE.ImageUtils.loadTexture('earth.jpg')} );
+    var material = new THREE.MeshLambertMaterial( {map:THREE.ImageUtils.loadTexture('textures/earth.jpg')} );
     var earth_mesh = new THREE.Mesh(geometry, material);
     earth_mesh.position.set(2,0,0);
     //earth_mesh.matrixAutoUpdate = false;
