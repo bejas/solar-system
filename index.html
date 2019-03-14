@@ -5,14 +5,47 @@
 		<title>The Solar System</title>
 		<style>
 			body { margin: 0; }
+			p { margin: 0;
+				color: #B3B6B7;
+				text-align: center;
+				font-family: Verdana, Geneva, Tahoma, sans-serif;
+				font-size: 85%;
+			}
+			input {
+				margin: 0;
+				-webkit-appearance: none;
+				background-color: gray;
+				overflow: hidden;
+			}
+			input[type='range']::-webkit-slider-thumb {
+				width: 12px;
+				-webkit-appearance: none;
+				height: 7px;
+				background: white;
+			}
+			div { background-color: black; }
 		</style>
 	</head>
 	<body>
 		<script src="three.js"></script>
 		<script src="solar-system.js"></script>
+		<div >
+			
+		</div>
 		<div>
-			<input id='cameraY' type="range" min="-100" max="100" value="0" class="slider"/>
-			<input id='cameraZ' type="range" min="-100" max="300" value="155" class="slider"/>
+			<table cellspacing='3'>
+				<tr>
+					<td><p>Camera Y</p></td>
+					<td><p>Camera Z</p></td>
+					<td><p>Speed</p></td>
+				</tr>
+				<tr>
+					<td><input id='cameraY' type="range" min="-500" max="500" value="0"/></td>
+					<td><input id='cameraZ' type="range" min="-100" max="300" value="155"/></td>
+					<td><input id='speed' type="range" min="1" max="100" value="30"/></td>
+				</tr>
+
+			</table>
 		</div>
 	</body>
 </html>

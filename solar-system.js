@@ -6,6 +6,8 @@ window.onload = function() {
     var camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
     camera.position.y = 0;
     camera.position.z = 85;
+    
+    
 
     // WebGL renderer
     var renderer = new THREE.WebGLRenderer();
@@ -27,8 +29,11 @@ window.onload = function() {
     scene.add(ambient_light);
 
     // Adding stars
-    stars = loader.load('textures/stars.jpg');
+    stars = loader.load('textures/stars2.jpg');
     scene.background = stars;
+
+    // Constants
+    var speed = 0.3;
 
     // Adding mercury
     var geometry = new THREE.SphereGeometry(3, 32, 32);
@@ -77,19 +82,18 @@ window.onload = function() {
         var dt = now - (animate.time || now);
         animate.time = now;
 
-        var rot_const = 0.001;
-        var speed = 0.3;
+        
         
 
         renderer.render(scene, camera);
         requestAnimationFrame(animate);
 
         // Sun
-        var sun_rot = new THREE.Matrix4().makeRotationY(now * rot_const);
+        var sun_rot = new THREE.Matrix4().makeRotationY(now*0.001 * speed);
         sun_mesh.matrix = sun_rot;
 
         // Mercury
-        var mercury_self_rot = new THREE.Matrix4().makeRotationY(now * 0.001 * speed);
+        var mercury_self_rot = new THREE.Matrix4().makeRotationY(now*0.001 * speed);
         var mercury_tras = new THREE.Matrix4().makeTranslation(30,0,0);
         var mercury_sun_rot = new THREE.Matrix4().makeRotationY(0.005*now * speed);
         mercury_mesh.matrix = mercury_sun_rot.multiply(mercury_tras.multiply(mercury_self_rot));
@@ -122,8 +126,10 @@ window.onload = function() {
 
     }
 
-    document.getElementById("cameraY").oninput = function(e) { camera.position.y = e.target.value; };
-    document.getElementById("cameraZ").oninput = function(e) { camera.position.z = e.target.value; };
+    document.getElementById("cameraY").oninput = function(e) { camera.position.y = e.target.value; camera.lookAt(new THREE.Vector3(0,0,0)); };
+    document.getElementById("cameraZ").oninput = function(e) { camera.position.z = e.target.value; camera.lookAt(new THREE.Vector3(0,0,0)); };
+    document.getElementById("speed").oninput = function(e) { speed = 3*e.target.value/100; };
+    
 
 
 
