@@ -23,15 +23,12 @@ window.onload = function() {
     // Adding light
     var sun_light = new THREE.PointLight( 0xffffff, 1.5 );
     sun_mesh.add(sun_light);
-    var ambient_light = new THREE.AmbientLight( 0x404040 ); // soft white light
+    var ambient_light = new THREE.AmbientLight( 0x404040 ); // soft white ambient light
     scene.add(ambient_light);
 
     // Adding stars
     stars = loader.load('textures/stars.jpg');
     scene.background = stars;
-
-    // Constants
-    var speed = 0.3;
 
     // Adding mercury
     var geometry = new THREE.SphereGeometry(3, 32, 32);
@@ -80,12 +77,11 @@ window.onload = function() {
     jupiter_mesh.matrixAutoUpdate = false;
     scene.add(jupiter_mesh);
 
+    // Constants
+    var speed = 0.3;
 
     function animate() {
         var now = new Date();
-        now.setHours(now.getHours() + 0);
-        var dt = now - (animate.time || now);
-        animate.time = now;
 
         renderer.render(scene, camera);
         requestAnimationFrame(animate);
@@ -115,7 +111,7 @@ window.onload = function() {
         var earth_tras = new THREE.Matrix4().makeTranslation(60,0,0);
         var earth_sun_rot = new THREE.Matrix4().makeRotationY(0.0015*now * speed);
         earth_mesh.matrix = earth_sun_rot.multiply(earth_tras.multiply(earth_self_rot));
-        // Moon
+        // Earth's Moon
         var earth_moon_tras = new THREE.Matrix4().makeTranslation(7,0,0);
         var earth_moon_earth_rot = new THREE.Matrix4().makeRotationY(0.001*now);
         earth_moon_mesh.matrix = earth_moon_earth_rot.multiply(earth_moon_tras);
@@ -137,6 +133,5 @@ window.onload = function() {
     document.getElementById("cameraZ").oninput = function(e) { camera.position.z = e.target.value; camera.lookAt(new THREE.Vector3(0,0,0)); };
     document.getElementById("speed").oninput = function(e) { speed = 3*e.target.value/100; };
     
-
     animate();
 }
