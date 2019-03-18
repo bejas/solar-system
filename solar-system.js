@@ -24,16 +24,6 @@ window.onload = function() {
     sun_mesh.matrixAutoUpdate = false;
     scene.add(sun_mesh);
 
-    // Adding light
-    var sun_light = new THREE.PointLight( 0xffffff, 1 );
-    sun_mesh.add(sun_light);
-    var ambient_light = new THREE.AmbientLight( 0x404040 ); // soft white ambient light
-    scene.add(ambient_light);
-
-    // Adding stars
-    stars = loader.load('textures/stars.jpg');
-    scene.background = stars;
-
     // Adding mercury
     var geometry = new THREE.SphereGeometry(3, 32, 32);
     var material = new THREE.MeshLambertMaterial( {map: loader.load('textures/mercury.jpg')} );
@@ -87,6 +77,16 @@ window.onload = function() {
     var saturn_mesh = new THREE.Mesh(geometry, material);
     saturn_mesh.matrixAutoUpdate = false;
     scene.add(saturn_mesh);
+
+    // Adding light
+    var sun_light = new THREE.PointLight( 0xffffff, 1 );
+    sun_mesh.add(sun_light);
+    var ambient_light = new THREE.AmbientLight( 0x404040 ); // soft white ambient light
+    scene.add(ambient_light);
+
+    // Adding stars
+    stars = loader.load('textures/stars.jpg');
+    scene.background = stars;
 
     // Constants
     var speed = 0.3;
@@ -151,4 +151,11 @@ window.onload = function() {
     document.getElementById("speed").oninput = function(e) { speed = 3*e.target.value/100; };
     
     animate();
+    snackBarFun();
+}
+
+function snackBarFun() {
+    var x = document.getElementById("snackbar");
+    x.className = "show";
+    setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
 }
