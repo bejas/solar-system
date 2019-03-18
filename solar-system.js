@@ -13,6 +13,10 @@ window.onload = function() {
     document.body.appendChild(renderer.domElement);
     var loader = new THREE.TextureLoader();
 
+    // Orbit control
+    orbitControl = new THREE.OrbitControls( camera, renderer.domElement );
+    orbitControl.maxDistance = 200;
+
     // Adding the Sun
     var geometry = new THREE.SphereGeometry(23, 32, 32);
     var material = new THREE.MeshBasicMaterial( {map: (new THREE.TextureLoader()).load('textures/sun.jpg')} );
