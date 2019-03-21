@@ -87,7 +87,7 @@
         "parent": "sun",
         "speedSelfRot": 5,
         "tras": 170,
-        "speedParentRot": 6
+        "speedParentRot": 7
     },
     "neptune": {
         "radius": 3.4,
@@ -96,6 +96,6 @@
         "parent": "sun",
         "speedSelfRot": 5,
         "tras": 190,
-        "speedParentRot": 6
+        "speedParentRot": 8
     }
 }

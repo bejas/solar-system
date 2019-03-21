@@ -17,18 +17,17 @@ window.onload = function() {
     orbitControl = new THREE.OrbitControls( camera, renderer.domElement );
     orbitControl.maxDistance = 200;
 
-
-
-    var objects;
-    $.getJSON( "objects.json", function(data) {
-        objects = data;
-        console.log(objects['sun']);
-    });
+    // Load json
+    var request = new XMLHttpRequest();
+    request.open("GET", "./objects.json", false);
+    request.send(null)
+    var objects = JSON.parse(request.responseText);
+    
 
     for (var i in objects) {
         o = objects[i];
         var geometry = new THREE.SphereGeometry(o.radius, 32, 32);
-        
+
         switch(o.material)
         {
             case 'basic':
