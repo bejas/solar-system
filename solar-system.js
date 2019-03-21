@@ -16,10 +16,49 @@ window.onload = function() {
     // Orbit control
     orbitControl = new THREE.OrbitControls( camera, renderer.domElement );
     orbitControl.maxDistance = 200;
+
+    var objects = {
+        sun: {
+            radius: 23,
+            material: 'basic',
+            texture: 'sun.jpg',
+            parent: 'scene',
+            selfRot: 1,
+            tras: 0,
+            sunRot: 0
+        },
+        mercury: {
+            radius: 3,
+            material: 'lambert',
+            texture: 'mercury.jpg',
+            parent: 'scene',
+            selfRot: 2,
+            tras: 30,
+            sunRot: 10
+        }
+    };
+
+    for (var i in objects) {
+        o = objects[i];
+        var geometry = new THREE.SphereGeometry(o.radius, 32, 32);
+        
+        switch(o.material) {
+            case 'basic':
+                var material = new THREE.MeshBasicMaterial( {map: (new THREE.TextureLoader()).load('textures/' + o.texture) } );
+                break;
+            case 'lambert':
+                var material = new THREE.MeshLambertMaterial( {map: (new THREE.TextureLoader()).load('textures/' + o.texture) } );
+        }
+
+        o.mesh = new THREE.Mesh(geometry, material);
+        o.mesh.matrixAutoUpdate = false;
+        scene.add(o.mesh);
+    }
     
+    /*
     // Adding the Sun
     var geometry = new THREE.SphereGeometry(23, 32, 32);
-    var material = new THREE.MeshBasicMaterial( {map: (new THREE.TextureLoader()).load('textures/sun.jpg'), side: THREE.DoubleSide} );
+    var material = new THREE.MeshBasicMaterial( {map: (new THREE.TextureLoader()).load('textures/sun.jpg'), side: THREE.SingleSide} );
     var sun_mesh = new THREE.Mesh(geometry, material);
     sun_mesh.matrixAutoUpdate = false;
     scene.add(sun_mesh);
@@ -77,20 +116,21 @@ window.onload = function() {
     var saturn_mesh = new THREE.Mesh(geometry, material);
     saturn_mesh.matrixAutoUpdate = false;
     scene.add(saturn_mesh);
+    */
 
     // Adding light
     var sun_light = new THREE.PointLight( 0xffffff, 1 );
-    sun_mesh.add(sun_light);
+    scene.add(sun_light);
     var ambient_light = new THREE.AmbientLight( 0x404040 ); // soft white ambient light
     scene.add(ambient_light);
 
     // Adding stars
-    stars = new THREE.Mesh(new THREE.SphereGeometry(300, 64), new THREE.MeshBasicMaterial({ map: loader.load('textures/stars.jpg'), side: THREE.BackSide }));
+    stars = new THREE.Mesh(new THREE.SphereGeometry(300, 64, 64), new THREE.MeshBasicMaterial({ map: loader.load('textures/stars.jpg'), side: THREE.BackSide }));
     scene.add(stars);
     stars.matrixAutoUpdate = false;
-
+    
     // Constants
-    var speed = 0.3;
+    var speed = 0.0002;
 
     function animate() {
         var now = new Date();
@@ -98,12 +138,21 @@ window.onload = function() {
         renderer.render(scene, camera);
         requestAnimationFrame(animate);
 
+        for(var i in objects) {
+            o = objects[i];
+            var selfRot = new THREE.Matrix4().makeRotationY( now*speed * o.selfRot );
+            var tras = new THREE.Matrix4().makeTranslation( o.tras,0,0 );
+            var sunRot = new THREE.Matrix4().makeRotationY( now*speed * o.sunRot );
+            o.mesh.matrix = sunRot.multiply(tras.multiply(selfRot));
+        }
+
+
         // Sun
-        var sun_rot = new THREE.Matrix4().makeRotationY(now*0.0005 * speed);
-        sun_mesh.matrix = sun_rot;
+        
 
         stars.matrix = new THREE.Matrix4().makeRotationY(now*0.00003 * speed);
 
+        /*
         // Mercury
         var mercury_self_rot = new THREE.Matrix4().makeRotationY(now*0.001 * speed);
         var mercury_tras = new THREE.Matrix4().makeTranslation(30,0,0);
@@ -147,6 +196,7 @@ window.onload = function() {
         var saturn_tras = new THREE.Matrix4().makeTranslation(115,0,0);
         var saturn_sun_rot = new THREE.Matrix4().makeRotationY(0.00025*now * speed);
         saturn_mesh.matrix = saturn_sun_rot.multiply(saturn_tras.multiply(saturn_self_rot));
+        */
     }
 
     document.getElementById("cameraY").oninput = function(e) { camera.position.y = e.target.value; camera.lookAt(new THREE.Vector3(0,0,0)); };
