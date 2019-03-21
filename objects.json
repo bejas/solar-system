@@ -1,0 +1,101 @@
+{
+        "sun": {
+        "radius": 23,
+        "material": "basic",
+        "texture": "sun.jpg",
+        "parent": "scene",
+        "speedSelfRot": 1,
+        "tras": 0,
+        "speedParentRot": 0
+    },
+    "mercury": {
+        "radius": 3,
+        "material": "lambert",
+        "texture": "mercury.jpg",
+        "parent": "sun",
+        "speedSelfRot": 5,
+        "tras": 30,
+        "speedParentRot": 1
+    },
+    "venus": {
+        "radius": 5,
+        "material": "lambert",
+        "texture": "venus.jpg",
+        "parent": "sun",
+        "speedSelfRot": 5,
+        "tras": 60,
+        "speedParentRot": 2
+    },
+    "venusMoon": {
+        "radius": 1.5,
+        "material": "lambert",
+        "texture": "moon.jpg",
+        "parent": "venus",
+        "speedSelfRot": 5,
+        "tras": 10,
+        "speedParentRot": 1
+    },
+    "earth": {
+        "radius": 5,
+        "material": "lambert",
+        "texture": "earth.jpg",
+        "parent": "sun",
+        "speedSelfRot": 5,
+        "tras": 90,
+        "speedParentRot": 3
+    },
+    "earthMoon": {
+        "radius": 1.5,
+        "material": "lambert",
+        "texture": "moon.jpg",
+        "parent": "earth",
+        "speedSelfRot": 5,
+        "tras": 10,
+        "speedParentRot": 1
+    },
+    "mars": {
+        "radius": 3.5,
+        "material": "lambert",
+        "texture": "mars.jpg",
+        "parent": "sun",
+        "speedSelfRot": 5,
+        "tras": 110,
+        "speedParentRot": 4
+    },
+    "jupiter": {
+        "radius": 8,
+        "material": "lambert",
+        "texture": "jupiter.jpg",
+        "parent": "sun",
+        "speedSelfRot": 5,
+        "tras": 130,
+        "speedParentRot": 5
+    },
+    "saturn": {
+        "radius": 7,
+        "material": "lambert",
+        "texture": "saturn.jpg",
+        "parent": "sun",
+        "speedSelfRot": 5,
+        "tras": 150,
+        "speedParentRot": 6
+    },
+    "uranus": {
+        "radius": 3.5,
+        "material": "lambert",
+        "texture": "uranus.jpg",
+        "parent": "sun",
+        "speedSelfRot": 5,
+        "tras": 170,
+        "speedParentRot": 6
+    },
+    "neptune": {
+        "radius": 3.4,
+        "material": "lambert",
+        "texture": "neptune.jpg",
+        "parent": "sun",
+        "speedSelfRot": 5,
+        "tras": 190,
+        "speedParentRot": 6
+    }
+}
