@@ -16,10 +16,10 @@ window.onload = function() {
     // Orbit control
     orbitControl = new THREE.OrbitControls( camera, renderer.domElement );
     orbitControl.maxDistance = 200;
-
+    
     // Adding the Sun
     var geometry = new THREE.SphereGeometry(23, 32, 32);
-    var material = new THREE.MeshBasicMaterial( {map: (new THREE.TextureLoader()).load('textures/sun.jpg')} );
+    var material = new THREE.MeshBasicMaterial( {map: (new THREE.TextureLoader()).load('textures/sun.jpg'), side: THREE.DoubleSide} );
     var sun_mesh = new THREE.Mesh(geometry, material);
     sun_mesh.matrixAutoUpdate = false;
     scene.add(sun_mesh);
@@ -85,8 +85,9 @@ window.onload = function() {
     scene.add(ambient_light);
 
     // Adding stars
-    stars = loader.load('textures/stars.jpg');
-    scene.background = stars;
+    stars = new THREE.Mesh(new THREE.SphereGeometry(300, 64), new THREE.MeshBasicMaterial({ map: loader.load('textures/stars.jpg'), side: THREE.BackSide }));
+    scene.add(stars);
+    stars.matrixAutoUpdate = false;
 
     // Constants
     var speed = 0.3;
@@ -100,6 +101,8 @@ window.onload = function() {
         // Sun
         var sun_rot = new THREE.Matrix4().makeRotationY(now*0.0005 * speed);
         sun_mesh.matrix = sun_rot;
+
+        stars.matrix = new THREE.Matrix4().makeRotationY(now*0.00003 * speed);
 
         // Mercury
         var mercury_self_rot = new THREE.Matrix4().makeRotationY(now*0.001 * speed);
