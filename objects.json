@@ -4,7 +4,6 @@
         "material": "basic",
         "texture": "sun.jpg",
         "parent": "scene",
-        "children": [],
         "speedSelfRot": 1,
         "tras": 0,
         "speedParentRot": 0
@@ -14,9 +13,8 @@
         "material": "lambert",
         "texture": "mercury.jpg",
         "parent": "sun",
-        "children": [],
         "speedSelfRot": 5,
-        "tras": 26,
+        "tras": 29,
         "speedParentRot": 1
     },
     "venus": {
@@ -24,9 +22,8 @@
         "material": "lambert",
         "texture": "venus.jpg",
         "parent": "sun",
-        "children": [],
         "speedSelfRot": 5,
-        "tras": 60,
+        "tras": 42,
         "speedParentRot": 2
     },
     "venusMoon": {
@@ -34,9 +31,8 @@
         "material": "lambert",
         "texture": "moon.jpg",
         "parent": "venus",
-        "children": [],
         "speedSelfRot": 5,
-        "tras": 10,
+        "tras": 8,
         "speedParentRot": 1
     },
     "earth": {
@@ -44,9 +40,8 @@
         "material": "lambert",
         "texture": "earth.jpg",
         "parent": "sun",
-        "children": [],
         "speedSelfRot": 5,
-        "tras": 90,
+        "tras": 62,
         "speedParentRot": 3
     },
     "earthMoon": {
@@ -54,9 +49,8 @@
         "material": "lambert",
         "texture": "moon.jpg",
         "parent": "earth",
-        "children": [],
         "speedSelfRot": 5,
-        "tras": 10,
+        "tras": 8,
         "speedParentRot": 1
     },
     "mars": {
@@ -64,9 +58,8 @@
         "material": "lambert",
         "texture": "mars.jpg",
         "parent": "sun",
-        "children": [],
         "speedSelfRot": 5,
-        "tras": 110,
+        "tras": 77,
         "speedParentRot": 4
     },
     "jupiter": {
@@ -74,9 +67,8 @@
         "material": "lambert",
         "texture": "jupiter.jpg",
         "parent": "sun",
-        "children": [],
         "speedSelfRot": 5,
-        "tras": 130,
+        "tras": 92,
         "speedParentRot": 5
     },
     "saturn": {
@@ -84,9 +76,8 @@
         "material": "lambert",
         "texture": "saturn.jpg",
         "parent": "sun",
-        "children": [],
         "speedSelfRot": 5,
-        "tras": 150,
+        "tras": 110,
         "speedParentRot": 6
     },
     "uranus": {
@@ -94,9 +85,8 @@
         "material": "lambert",
         "texture": "uranus.jpg",
         "parent": "sun",
-        "children": [],
         "speedSelfRot": 5,
-        "tras": 170,
+        "tras": 123,
         "speedParentRot": 7
     },
     "neptune": {
@@ -104,9 +94,8 @@
         "material": "lambert",
         "texture": "neptune.jpg",
         "parent": "sun",
-        "children": [],
         "speedSelfRot": 5,
-        "tras": 190,
+        "tras": 132,
         "speedParentRot": 8
     }
 }

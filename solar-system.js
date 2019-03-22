@@ -39,27 +39,8 @@ window.onload = function () {
         o.mesh = new THREE.Mesh(geometry, material);
         o.mesh.matrixAutoUpdate = false;
 
-        if (o.parent == 'scene')
-        {
-            scene.add(o.mesh);
-            o.tras = 0;
-        }
-        else
-        {
-            objects[o.parent].mesh.add(o.mesh);
-            
-            console.log(objects[o.parent].children);
-            o.tras = (function () {
-                var temp = objects[o.parent].radius;
-                temp += o.radius;
-                for (var c in objects[o.parent].children) {
-                    temp += (2 * objects[o.parent].children[c].radius);
-                }
-                return temp*1;
-            }());
-            objects[o.parent].children.push(o);
-            console.log(o.tras);
-        }
+        if (o.parent == 'scene') { scene.add(o.mesh); }
+        else { objects[o.parent].mesh.add(o.mesh); }
     }
 
 
@@ -78,12 +59,10 @@ window.onload = function () {
     var speed = 0.0002;
 
     function animate() {
-        var now = 1;
+        var now = Date.now();
 
-        renderer.render(scene, camera);
-        requestAnimationFrame(animate);
-
-        for (var i in objects) {
+        for (var i in objects)
+        {
             o = objects[i];
             var speedSelfRot = new THREE.Matrix4().makeRotationY(now * speed * o.speedSelfRot);
             var tras = new THREE.Matrix4().makeTranslation(o.tras, 0, 0);
@@ -92,10 +71,11 @@ window.onload = function () {
         }
 
         stars.matrix = new THREE.Matrix4().makeRotationY(now * speed / 10);
+
+        renderer.render(scene, camera);
+        requestAnimationFrame(animate);
     }
 
-    document.getElementById("cameraY").oninput = function (e) { camera.position.y = e.target.value; camera.lookAt(new THREE.Vector3(0, 0, 0)); };
-    document.getElementById("cameraZ").oninput = function (e) { camera.position.z = e.target.value; camera.lookAt(new THREE.Vector3(0, 0, 0)); };
     document.getElementById("speed").oninput = function (e) { speed = e.target.value / 10000; };
 
     animate();
