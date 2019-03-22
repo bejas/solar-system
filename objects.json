@@ -1,9 +1,10 @@
 {
-        "sun": {
+    "sun": {
         "radius": 23,
         "material": "basic",
         "texture": "sun.jpg",
         "parent": "scene",
+        "children": [],
         "speedSelfRot": 1,
         "tras": 0,
         "speedParentRot": 0
@@ -13,8 +14,9 @@
         "material": "lambert",
         "texture": "mercury.jpg",
         "parent": "sun",
+        "children": [],
         "speedSelfRot": 5,
-        "tras": 30,
+        "tras": 26,
         "speedParentRot": 1
     },
     "venus": {
@@ -22,6 +24,7 @@
         "material": "lambert",
         "texture": "venus.jpg",
         "parent": "sun",
+        "children": [],
         "speedSelfRot": 5,
         "tras": 60,
         "speedParentRot": 2
@@ -31,6 +34,7 @@
         "material": "lambert",
         "texture": "moon.jpg",
         "parent": "venus",
+        "children": [],
         "speedSelfRot": 5,
         "tras": 10,
         "speedParentRot": 1
@@ -40,6 +44,7 @@
         "material": "lambert",
         "texture": "earth.jpg",
         "parent": "sun",
+        "children": [],
         "speedSelfRot": 5,
         "tras": 90,
         "speedParentRot": 3
@@ -49,6 +54,7 @@
         "material": "lambert",
         "texture": "moon.jpg",
         "parent": "earth",
+        "children": [],
         "speedSelfRot": 5,
         "tras": 10,
         "speedParentRot": 1
@@ -58,6 +64,7 @@
         "material": "lambert",
         "texture": "mars.jpg",
         "parent": "sun",
+        "children": [],
         "speedSelfRot": 5,
         "tras": 110,
         "speedParentRot": 4
@@ -67,6 +74,7 @@
         "material": "lambert",
         "texture": "jupiter.jpg",
         "parent": "sun",
+        "children": [],
         "speedSelfRot": 5,
         "tras": 130,
         "speedParentRot": 5
@@ -76,6 +84,7 @@
         "material": "lambert",
         "texture": "saturn.jpg",
         "parent": "sun",
+        "children": [],
         "speedSelfRot": 5,
         "tras": 150,
         "speedParentRot": 6
@@ -85,6 +94,7 @@
         "material": "lambert",
         "texture": "uranus.jpg",
         "parent": "sun",
+        "children": [],
         "speedSelfRot": 5,
         "tras": 170,
         "speedParentRot": 7
@@ -94,6 +104,7 @@
         "material": "lambert",
         "texture": "neptune.jpg",
         "parent": "sun",
+        "children": [],
         "speedSelfRot": 5,
         "tras": 190,
         "speedParentRot": 8
