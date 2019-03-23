@@ -26,7 +26,7 @@ window.onload = function ()
     scene.add( new THREE.AmbientLight(0x404040) );
 
     // Adding stars
-    stars = new THREE.Mesh(new THREE.SphereGeometry(300, 64, 64), new THREE.MeshBasicMaterial({ map: loader.load('textures/stars1.jpg'), side: THREE.BackSide }));
+    stars = new THREE.Mesh(new THREE.SphereGeometry(300, 64, 64), new THREE.MeshBasicMaterial( { map: loader.load('textures/stars.jpg'), side: THREE.BackSide } ));
     scene.add(stars);
     stars.matrixAutoUpdate = false;
 
@@ -36,54 +36,60 @@ window.onload = function ()
     // Snackbar    
     snackbar = document.getElementById("snackbar");
     snackbar.className = "show";
-    setTimeout(function () { snackbar.className = snackbar.className.replace("show", ""); }, 3000);
+    setTimeout(function () { snackbar.className = snackbar.className.replace("show", ""); }, 4900);
 
     // Load objects
     var request = new XMLHttpRequest();
-    request.open("GET", "./objects.json", false);
-    request.send(null)
-    var objects = JSON.parse(request.responseText);
-
-    for (var i in objects)
+    request.open("GET", "./objects.json", true);
+    request.send(null);
+    request.onload = function ()
     {
-        o = objects[i];
-        var geometry = new THREE.SphereGeometry(o.radius, 32, 32);
+        var objects = JSON.parse(request.responseText);
 
-        switch (o.material) 
-        {
-            case 'basic':
-                var material = new THREE.MeshBasicMaterial({ map: (new THREE.TextureLoader()).load('textures/' + o.texture) });
-                break;
-            case 'lambert':
-                var material = new THREE.MeshLambertMaterial({ map: (new THREE.TextureLoader()).load('textures/' + o.texture) });
-                break;
-        }
-
-        o.mesh = new THREE.Mesh(geometry, material);
-        o.mesh.matrixAutoUpdate = false;
-
-        if (o.parent == 'scene') { scene.add(o.mesh); }
-        else { objects[o.parent].mesh.add(o.mesh); }
-    }
-
-    // Animate function
-    (function animate()
-    {
-        var now = Date.now();
-
+        // Create planets
         for (var i in objects)
         {
             o = objects[i];
-            var speedSelfRot = new THREE.Matrix4().makeRotationY(now * speed * o.speedSelfRot);
-            var tras = new THREE.Matrix4().makeTranslation(o.tras, 0, 0);
-            var speedParentRot = new THREE.Matrix4().makeRotationY(now * speed * o.speedParentRot);
-            o.mesh.matrix = speedParentRot.multiply(tras.multiply(speedSelfRot));
+            var geometry = new THREE.SphereGeometry(o.radius, 32, 32);
+
+            switch (o.material) 
+            {
+                case 'basic':
+                    var material = new THREE.MeshBasicMaterial({ map: (new THREE.TextureLoader()).load('textures/' + o.texture) });
+                    break;
+                case 'lambert':
+                    var material = new THREE.MeshLambertMaterial({ map: (new THREE.TextureLoader()).load('textures/' + o.texture) });
+                    break;
+            }
+
+            o.mesh = new THREE.Mesh(geometry, material);
+            o.mesh.matrixAutoUpdate = false;
+
+            if (o.parent == 'scene') { scene.add(o.mesh); }
+            else { objects[o.parent].mesh.add(o.mesh); }
         }
 
-        // Stars light movement
-        stars.matrix = new THREE.Matrix4().makeRotationY(now * speed / 10);
+        // Animate function
+        (function animate()
+        {
+            var now = Date.now();
 
-        renderer.render(scene, camera);
-        requestAnimationFrame(animate);
-    })();
+            for (var i in objects)
+            {
+                o = objects[i];
+                var speedSelfRot = new THREE.Matrix4().makeRotationY(now * speed * o.speedSelfRot);
+                var tras = new THREE.Matrix4().makeTranslation(o.tras, 0, 0);
+                var speedParentRot = new THREE.Matrix4().makeRotationY(now * speed * o.speedParentRot);
+                o.mesh.matrix = speedParentRot.multiply(tras.multiply(speedSelfRot));
+            }
+
+            // Stars movement
+            stars.matrix = new THREE.Matrix4().makeRotationY(now * speed / 10);
+
+            renderer.render(scene, camera);
+            requestAnimationFrame(animate);
+        })();
+        
+    }
+
 }
